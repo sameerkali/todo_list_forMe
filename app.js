@@ -4,46 +4,44 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const app = express()
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({extended : true}))
 
-// this line is unnessesery
-app.get("/", function(req, res) {
+
+
+
+
+var items = ["Buy food", "Cook food", "Eat food"];
+
+
+app.get("/", (req, res) => {
+    
+    
+    
     var today = new Date()
-    var currentDay = today.getDay()
-    var  day = "";
-    switch (currentDay) {
-        case 0:
-            day = "sunday"
-            break;
 
-        case 1:
-            day = "monday"
-            break;
+    const options = {weekday : "long", day : "numeric", month : "long"}
 
-        case 2:
-            day = "tuesday"
-            break;
+    let day = today.toLocaleDateString("en-US", options)
+    let dayhin = today.toLocaleDateString("hi-IN", options)
 
-        case 3:
-            day = "wednessday"
-            break;
 
-        case 4:
-            day = "thursday"
-            break;
+    res.render('list', { kindOfDay: day, newListItems : items}); 
+    // res.render('list', { kindOfDayHin: dayhin })  //ejs== <h1 style="color:rgb(51, 51, 119)"> <%= kindOfDayHin %> </h1>
 
-        case 5:
-            day = " friday"
-            break;
 
-        case 6:
-            day = "saturday"
-            break;
 
-        default:
-            break;
-            console.log("error")
-    }
 
-    res.render('list', { whichDay: day })
 })
+
+app.post("/", (req, res) => {
+    var item = req.body.newItem;
+    items.push(item);
+    res.redirect("/")
+})
+
+
+
+
+
 app.listen(3000)
+

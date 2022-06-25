@@ -9,7 +9,25 @@
 </head>
 
 <body>
-    <h1> Today is a <%= whichDay %> </h1>
+
+   
+
+
+        <h1 style="color:rgb(22, 22, 49)"> <%= kindOfDay %> </h1>
+        
+        <ul>
+            
+           <% for(var i = 0 ; i < newListItems.length ; i++){ %>
+                <li><%= newListItems[i] %></li>
+           <% } %>
+        </ul>
+
+        <form action="/" method="post">
+            <input type="text" name="newItem">
+            <button name="button" type="submit">add</button>
+        </form>
+
+
 </body>
 
 </html>
